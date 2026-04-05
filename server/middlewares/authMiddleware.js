@@ -5,7 +5,7 @@ export const  protect = async(req,res,next)=>{
     if(!userId){
       return res.status(401).json({message: "unauthorised"})
     }
-    return next9
+    return next()
   }
   catch(err){
     console.log(err)
