@@ -4,8 +4,8 @@ import prisma from "../config/db.js"
 // get all workspace for the user
 export const getUserWorkspaces = async(req,res)=>{
   try{
-    const {userId} = await req.auth
-
+    const {userId} = await req.auth()
+    console.log("userId: ",userId)
     const workspaces = await prisma.workspace.findMany({
       where:{
         members: {some: {userId: userId}}
@@ -21,7 +21,7 @@ export const getUserWorkspaces = async(req,res)=>{
         owner: true
       }
     })
-
+    console.log("workspaces sent: ",workspaces)
     res.json({workspaces})
   }
   catch(err){
@@ -37,12 +37,12 @@ export const getUserWorkspaces = async(req,res)=>{
 
 export const addMember = async(req,res)=>{
   try{
-    const {userId} = await req.auth
+    const {userId} = await req.auth()
     const {email,role,workspaceId,message} = req.body
 
     //check if user exist
 
-    const user = prisma.user.findUnique({
+    const user = await prisma.user.findUnique({
       where: {email}
     })
 
@@ -76,7 +76,7 @@ export const addMember = async(req,res)=>{
     }
 
     // check if user is already a member
-    const existingmember = workspace.members.find((member)=>member.userId === userId)
+    const existingmember = workspace.members.find((member)=>member.userId === user.id)
 
     if(existingmember){
       return res.status(401).json({message: "User is already a member of workspace"})
@@ -94,7 +94,7 @@ export const addMember = async(req,res)=>{
 
   }
   catch(err){
-    console.log(error)
+    console.log(err)
     res.status(500).json({
       message: err.code || err.message
     })
