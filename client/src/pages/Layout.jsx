@@ -11,6 +11,7 @@ import { fetchWorkspaces } from '../features/workspaceSlice.js'
 const Layout = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false)
     const { loading, workspaces } = useSelector((state) => state.workspace)
+    console.log("workspaces: ",workspaces)
     const dispatch = useDispatch()
     const {user,isLoaded} = useUser()
     const {getToken} = useAuth()
