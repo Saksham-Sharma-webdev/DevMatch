@@ -67,6 +67,8 @@ const syncWorkspaceCreation = inngest.createFunction(
     triggers: [{ event: "clerk/organization.created" }],
   }, 
   async({event})=>{
+    console.log("workspace creation triggered...")
+    console.log("event: ",event)
     const {data} = event
     await prisma.workspace.create({
       data:{
