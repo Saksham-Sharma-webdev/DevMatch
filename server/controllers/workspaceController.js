@@ -25,7 +25,7 @@ export const getUserWorkspaces = async(req,res)=>{
     res.json({workspaces})
   }
   catch(err){
-    console.log(error)
+    console.log(err)
     res.status(500).json({
       message: err.code || err.message
     })
