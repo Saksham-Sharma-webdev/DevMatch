@@ -1,6 +1,6 @@
 import { Inngest } from "inngest";
 import prisma from "../config/db.js";
-import sendMail from "../config/nodeMailer.js";
+import sendMail from "../config/nodemailer.js";
 
 // Create a client to send and receive events
 export const inngest = new Inngest({ id: "dev-match" });
